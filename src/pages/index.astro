@@ -1,16 +1,52 @@
 ---
 import Base from "../layouts/Base.astro";
-import BroadcastDemo from "../components/demos/BroadcastDemo.tsx"
 
-const title = "BroadcastChannel";
+const APIS = [
+  {
+    href: "/web-api/broadcast-channel",
+    title: "BroadcastChannel",
+    summary: "같은 브라우저의 탭끼리 서버 없이 메시지를 주고받는다",
+    done: true,
+  },
+  {
+    href: "/web-api/canvas",
+    title: "Canvas 2D",
+    summary: "requestAnimationFrame으로 매 프레임 직접 그린다",
+    done: false,
+  },
+  {
+    href: "/web-api/web-audio",
+    title: "Web Audio",
+    summary: "마이크 입력을 실시간 주파수로 시각화한다",
+    done: false,
+  },
+];
 ---
 
-<Base title={title}>
-    <h1>{title}</h1>
+<Base title="브라우저 API 놀이터" description="웹 플랫폼 API를 하나씩 만져보는 곳">
+  <h1 class="text-2xl font-bold tracking-tight">브라우저 API 놀이터</h1>
+  <p class="mt-2 text-sm text-neutral-500">
+    각 페이지는 짧은 설명(정적)과 데모 하나(섬)로 이뤄져 있습니다.
+  </p>
 
-    <p>같은 브라우저의 탭끼리 서버 없이 메시지를 주고받는다.</p>
-
-    <BroadcastDemo client:visible />
-
-    <h2>어떻게 동작하나</h2>
+  <ul class="mt-8 space-y-3">
+    {
+      APIS.map((api) => (
+        <li>
+          {api.done ? (
+            <a href={api.href} class="block rounded-lg border p-4 hover:bg-neutral-50">
+              <p class="font-medium">{api.title}</p>
+              <p class="mt-1 text-sm text-neutral-500">{api.summary}</p>
+            </a>
+          ) : (
+            <div class="block rounded-lg border border-dashed p-4 opacity-50">
+              <p class="font-medium">{api.title}</p>
+              <p class="mt-1 text-sm text-neutral-500">{api.summary}</p>
+              <p class="mt-2 text-xs text-neutral-400">준비 중</p>
+            </div>
+          )}
+        </li>
+      ))
+    }
+  </ul>
 </Base>

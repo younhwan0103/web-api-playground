@@ -1,0 +1,35 @@
+---
+import Base from "../../layouts/Base.astro";
+import BroadcastDemo from "../../components/demos/BroadcastDemo.tsx";
+
+const title = "BroadcastChannel";
+---
+
+<Base title={`${title} | 브라우저 API 놀이터`}>
+  <h1 class="text-2xl font-bold tracking-tight">{title}</h1>
+  <p class="mt-2 text-neutral-600">
+    같은 출처(origin)의 탭·창·iframe끼리 서버 없이 메시지를 주고받는다.
+  </p>
+
+  <!-- 이 컴포넌트만 JS가 나간다. 뷰포트에 들어올 때 하이드레이트. -->
+  <div class="mt-8">
+    <BroadcastDemo client:visible />
+  </div>
+
+  <h2 class="mt-10 text-lg font-semibold">알아둘 것</h2>
+  <ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-neutral-600">
+    <li>
+      <strong>보낸 쪽은 자기 메시지를 받지 못한다.</strong> 다른 컨텍스트에만
+      전달되므로, 보낸 탭의 화면은 직접 갱신해야 한다.
+    </li>
+    <li>같은 출처끼리만 통신한다. 다른 도메인과는 불가.</li>
+    <li>
+      서버를 거치지 않으므로 <strong>다른 기기와는 통신할 수 없다.</strong> 그건
+      WebSocket의 영역이다.
+    </li>
+    <li>
+      <code>channel.close()</code>를 정리 단계에서 호출하지 않으면 채널이
+      쌓인다.
+    </li>
+  </ul>
+</Base>

@@ -1,9 +1,20 @@
 ---
+import "../styles/global.css"
+
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
+
+const NAV = [
+  { href: "/", label: "목록" },
+  { href: "/web-api/broadcast-channel", label: "BroadcastChannel" },
+];
+
+// Astro.url은 빌드/요청 시점의 현재 URL. usePathname()에 해당한다.
+const current = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -12,10 +23,32 @@ const { title } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
+    {description && <meta name="description" content={description} />}
   </head>
 
-  <body>
-    <main>
+  <body class="min-h-screen bg-white text-neutral-900">
+    <header class="border-b">
+      <nav class="mx-auto flex max-w-3xl gap-4 px-6 py-3 text-sm">
+        {
+          NAV.map((item) => (
+            <a
+              href={item.href}
+              aria-current={current === item.href ? "page" : undefined}
+              class:list={[
+                "rounded px-2 py-1",
+                current === item.href
+                  ? "bg-neutral-900 text-white"
+                  : "text-neutral-500 hover:text-neutral-900",
+              ]}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-3xl px-6 py-10">
       <slot />
     </main>
   </body>
