@@ -1,11 +1,16 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Base from "../layouts/Base.astro";
+import BroadcastDemo from "../components/demos/BroadcastDemo.tsx"
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const title = "BroadcastChannel";
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<Base title={title}>
+    <h1>{title}</h1>
+
+    <p>같은 브라우저의 탭끼리 서버 없이 메시지를 주고받는다.</p>
+
+    <BroadcastDemo client:visible />
+
+    <h2>어떻게 동작하나</h2>
+</Base>
