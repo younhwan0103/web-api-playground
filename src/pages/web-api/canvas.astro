@@ -1,0 +1,31 @@
+---
+import Base from "../../layouts/Base.astro";
+import CanvasDemo from "../../components/demos/CanvasDemo.tsx";
+
+const title = "Canvas 2D";
+---
+
+<Base title={`${title} | 브라우저 API 놀이터`}>
+  <h1 class="text-2xl font-bold tracking-tight">{title}</h1>
+  <p class="mt-2 text-neutral-600">
+    DOM 없이 픽셀에 직접 그린다. 매 프레임 지우고 다시 그리는 방식.
+  </p>
+
+  <div class="mt-8">
+    <CanvasDemo client:visible />
+  </div>
+
+  <h2 class="mt-10 text-lg font-semibold">SVG와 무엇이 다른가</h2>
+  <table class="mt-3 w-full text-sm">
+    <thead class="text-left text-neutral-500">
+      <tr><th class="py-1">항목</th><th>SVG</th><th>Canvas</th></tr>
+    </thead>
+    <tbody class="border-t">
+      <tr class="border-b"><td class="py-2">요소</td><td>DOM 노드</td><td>픽셀만</td></tr>
+      <tr class="border-b"><td class="py-2">hover·클릭</td><td>이벤트 그대로</td><td>좌표로 직접 판정</td></tr>
+      <tr class="border-b"><td class="py-2">접근성</td><td>붙일 수 있음</td><td><strong>없음</strong></td></tr>
+      <tr class="border-b"><td class="py-2">선명도</td><td>자동</td><td>DPR 직접 처리</td></tr>
+      <tr class="border-b"><td class="py-2">요소 수천 개</td><td>느려짐</td><td>문제없음</td></tr>
+    </tbody>
+  </table>
+</Base>

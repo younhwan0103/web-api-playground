@@ -11,10 +11,12 @@ const { title, description } = Astro.props;
 const NAV = [
   { href: "/", label: "목록" },
   { href: "/web-api/broadcast-channel", label: "BroadcastChannel" },
+  { href: "/web-api/canvas", label: "Canvas 2D" },
 ];
 
 // Astro.url은 빌드/요청 시점의 현재 URL. usePathname()에 해당한다.
-const current = Astro.url.pathname;
+// 끝 슬래시를 벗겨 비교한다. dev와 build에서 형태가 달라질 수 있다.
+const current = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
 <!doctype html>
