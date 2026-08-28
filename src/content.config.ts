@@ -6,7 +6,7 @@ const webApi = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string(),
-    /** 붙일 데모. 값은 [...slug].astro의 DEMOS 키와 맞아야 한다. */
+    /** 붙일 데모. 값을 추가하면 [...slug].astro에도 분기를 추가해야 한다. */
     demo: z.enum(["broadcast", "canvas"]).optional(),
     order: z.number().default(0),
     draft: z.boolean().default(false),

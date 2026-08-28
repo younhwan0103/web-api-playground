@@ -5,6 +5,8 @@ import Base from "../layouts/Base.astro";
 const entries = (await getCollection("webApi", ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order
 );
+
+console.log("[index] entries: ", entries.length, entries.map((e) => e.id));
 ---
 
 <Base title="브라우저 API 놀이터" description="웹 플랫폼 API를 하나씩 만져보는 곳">
