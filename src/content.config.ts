@@ -1,0 +1,16 @@
+import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
+
+const webApi = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/web-api" }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    /** 붙일 데모. 값은 [...slug].astro의 DEMOS 키와 맞아야 한다. */
+    demo: z.enum(["broadcast", "canvas"]).optional(),
+    order: z.number().default(0),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { webApi };

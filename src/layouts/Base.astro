@@ -1,5 +1,6 @@
 ---
-import "../styles/global.css"
+import { getCollection } from "astro:content";
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -8,14 +9,15 @@ interface Props {
 
 const { title, description } = Astro.props;
 
+const entries = (await getCollection("webApi", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
 const NAV = [
   { href: "/", label: "목록" },
-  { href: "/web-api/broadcast-channel", label: "BroadcastChannel" },
-  { href: "/web-api/canvas", label: "Canvas 2D" },
+  ...entries.map((e) => ({ href: `/web-api/${e.id}`, label: e.data.title })),
 ];
 
-// Astro.url은 빌드/요청 시점의 현재 URL. usePathname()에 해당한다.
-// 끝 슬래시를 벗겨 비교한다. dev와 build에서 형태가 달라질 수 있다.
 const current = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 

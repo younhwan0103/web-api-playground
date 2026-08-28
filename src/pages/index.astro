@@ -1,26 +1,10 @@
 ---
+import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 
-const APIS = [
-  {
-    href: "/web-api/broadcast-channel",
-    title: "BroadcastChannel",
-    summary: "같은 브라우저의 탭끼리 서버 없이 메시지를 주고받는다",
-    done: true,
-  },
-  {
-    href: "/web-api/canvas",
-    title: "Canvas 2D",
-    summary: "requestAnimationFrame으로 매 프레임 직접 그린다",
-    done: true,
-  },
-  {
-    href: "/web-api/web-audio",
-    title: "Web Audio",
-    summary: "마이크 입력을 실시간 주파수로 시각화한다",
-    done: false,
-  },
-];
+const entries = (await getCollection("webApi", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <Base title="브라우저 API 놀이터" description="웹 플랫폼 API를 하나씩 만져보는 곳">
@@ -31,20 +15,15 @@ const APIS = [
 
   <ul class="mt-8 space-y-3">
     {
-      APIS.map((api) => (
+      entries.map((entry) => (
         <li>
-          {api.done ? (
-            <a href={api.href} class="block rounded-lg border p-4 hover:bg-neutral-50">
-              <p class="font-medium">{api.title}</p>
-              <p class="mt-1 text-sm text-neutral-500">{api.summary}</p>
-            </a>
-          ) : (
-            <div class="block rounded-lg border border-dashed p-4 opacity-50">
-              <p class="font-medium">{api.title}</p>
-              <p class="mt-1 text-sm text-neutral-500">{api.summary}</p>
-              <p class="mt-2 text-xs text-neutral-400">준비 중</p>
-            </div>
-          )}
+          <a
+            href={`/web-api/${entry.id}`}
+            class="block rounded-lg border p-4 hover:bg-neutral-50"
+          >
+            <p class="font-medium">{entry.data.title}</p>
+            <p class="mt-1 text-sm text-neutral-500">{entry.data.summary}</p>
+          </a>
         </li>
       ))
     }

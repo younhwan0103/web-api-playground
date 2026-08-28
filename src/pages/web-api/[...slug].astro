@@ -1,0 +1,45 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import BroadcastDemo from "../../components/demos/BroadcastDemo.tsx";
+import CanvasDemo from "../../components/demos/CanvasDemo.tsx";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("webApi", ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { demo } = entry.data;
+---
+
+<Base
+  title={`${entry.data.title} | 브라우저 API 놀이터`}
+  description={entry.data.summary}
+>
+  <h1 class="text-2xl font-bold tracking-tight">{entry.data.title}</h1>
+  <p class="mt-2 text-neutral-600">{entry.data.summary}</p>
+
+  {
+    demo && (
+      <div class="mt-8">
+        {/*
+          client:*는 빌드 타임 디렉티브라 컴포넌트를 변수로 줄 수 없다.
+          Astro가 태그 이름을 이 파일의 import와 대조해 하이드레이션
+          스크립트를 만들기 때문이다.
+          → content.config.ts의 z.enum에 값을 추가하면 여기 분기도 추가해야 한다.
+        */}
+        {demo === "broadcast" && <BroadcastDemo client:visible />}
+        {demo === "canvas" && <CanvasDemo client:visible />}
+      </div>
+    )
+  }
+
+  <div class="mt-10 space-y-4 text-sm text-neutral-600">
+    <Content />
+  </div>
+</Base>
