@@ -21,7 +21,7 @@ const { demo } = entry.data;
   title={`${entry.data.title} | 브라우저 API 놀이터`}
   description={entry.data.summary}
 >
-  <h1 class="text-2xl font-bold tracking-tight">{entry.data.title}</h1>
+  <h1 class="text-2xl font-bold tracking-tight" transition:name={`title-${entry.id}`}>{entry.data.title}</h1>
   <p class="mt-2 text-neutral-600">{entry.data.summary}</p>
 
   {

@@ -23,7 +23,7 @@ console.log("[index] entries: ", entries.length, entries.map((e) => e.id));
             href={`/web-api/${entry.id}`}
             class="block rounded-lg border p-4 hover:bg-neutral-50"
           >
-            <p class="font-medium">{entry.data.title}</p>
+            <p class="font-medium" transition:name="{`title-${entry.id}`}">{entry.data.title}</p>
             <p class="mt-1 text-sm text-neutral-500">{entry.data.summary}</p>
           </a>
         </li>

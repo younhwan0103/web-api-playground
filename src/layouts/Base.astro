@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -28,6 +29,7 @@ const current = Astro.url.pathname.replace(/\/$/, "") || "/";
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+    <ClientRouter />
   </head>
 
   <body class="min-h-screen bg-white text-neutral-900">
